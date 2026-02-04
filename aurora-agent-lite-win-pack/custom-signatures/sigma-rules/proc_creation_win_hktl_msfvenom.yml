@@ -1,0 +1,22 @@
+title: HackTool - MSFVenom Payload Generation
+id: 290d4ef3-3d58-4ca8-9b4e-0f7c5d6fa11e
+status: experimental
+description: Detects usage of msfvenom for payload generation on Windows systems
+references:
+  - https://www.metasploit.com/
+author: Codex
+date: 2025-07-11
+tags:
+  - attack.execution
+  - attack.t1105
+logsource:
+  category: process_creation
+  product: windows
+detection:
+  selection:
+    Image|contains: 'msfvenom'
+    CommandLine|contains: 'msfvenom'
+  condition: selection
+falsepositives:
+  - Penetration testing activities
+level: high

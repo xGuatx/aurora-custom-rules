@@ -1,0 +1,32 @@
+title: HackTool - NetExec Execution
+id: 9c9af7b5-d79d-4c1b-93da-15c6a09f36fb
+status: experimental
+description: Detects execution of NetExec (nxc) or modules such as zerologon often used during intrusion operations
+references:
+  - https://github.com/Pennyw0rth/NetExec
+  - https://github.com/risksense/zerologon
+  - https://github.com/SecureAuthCorp/impacket
+author: Codex
+date: 2025-07-11
+tags:
+  - attack.execution
+  - attack.lateral-movement
+logsource:
+  category: process_creation
+  product: windows
+detection:
+  selection_img:
+    Image|contains:
+      - '\nxc'
+      - '\netexec'
+  selection_cli:
+    CommandLine|contains:
+      - 'nxc '
+      - 'netexec '
+      - 'zerologon'
+      - 'secretsdump'
+      - 'wmiexec'
+  condition: 1 of selection_*
+falsepositives:
+  - Legitimate administrator usage of these tools
+level: high

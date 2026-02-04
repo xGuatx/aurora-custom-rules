@@ -1,0 +1,26 @@
+title: HackTool - Responder Python Script Execution
+id: 5fd4a458-7d2d-453f-b6b8-8c77c3d43451
+status: experimental
+description: Detects execution of the Responder Python tool often used for network credential capture
+references:
+  - https://github.com/lgandx/Responder
+author: Codex
+date: 2025-07-11
+tags:
+  - attack.credential-access
+  - attack.lateral-movement
+logsource:
+  category: process_creation
+  product: windows
+detection:
+  selection_img:
+    Image|contains:
+      - 'responder.py'
+  selection_cli:
+    CommandLine|contains:
+      - 'responder -I'
+      - 'Responder.py'
+  condition: 1 of selection_*
+falsepositives:
+  - Legitimate security testing
+level: high

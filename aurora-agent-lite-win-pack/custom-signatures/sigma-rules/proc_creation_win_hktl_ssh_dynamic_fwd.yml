@@ -1,0 +1,23 @@
+title: HackTool - SSH Dynamic Port Forwarding
+id: e31dfd51-ea7f-4ff1-a577-733e8860607a
+status: experimental
+description: Detects SSH usage with the -D option to create a SOCKS proxy for pivoting
+references:
+  - https://man.openbsd.org/ssh#OPTIONS
+author: Codex
+date: 2025-07-11
+tags:
+  - attack.command-and-control
+  - attack.t1090
+logsource:
+  category: process_creation
+  product: windows
+detection:
+  selection_img:
+    Image|endswith: '\ssh.exe'
+  selection_cli:
+    CommandLine|contains: ' -D '
+  condition: all of selection_*
+falsepositives:
+  - Legitimate remote administration using SSH tunnels
+level: medium
